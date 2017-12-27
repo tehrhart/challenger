@@ -1,0 +1,48 @@
+Challenger
+==========
+
+Challenger accellerates dictionary attacks on NETLMv1/MSCHAPv2 hashes by using 
+a partial-bruteforce/rainbow-tablea hybrid technique. Much like traditional 
+rainbow tables techniques, challenger has a tool (rtchallenge.py) to convert a
+wordlist into a rainbow table. This is not normally possibe for
+NETLMv1/MSCHAPv2 hashes, however, since they contain a unqiue challenge. Due to a 
+design flaw, we can quickly recover two bytes of the underlying NT hash and 
+use that as a crib to accellerate a rainbow-table style lookup against a pre-
+processed dictionary. The end result is a speedup of about 65,000 times over a
+plain dictionary attack in Python...not that I'm suggesting Python-based
+dictionary attacks are exactly fast. If Challenger cannot find the relevant 
+password, it outputs a hash compatible with Moxie Marlinspike's 
+CloudCracker.com website which should always be able to recover the full NT 
+hash for you.
+
+Setup
+-----
+
+Before running challenger, replace wordlist.txt with a larger word list and execute rtchallenge.py to build the tables.
+
+Use
+---
+
+   challenger.py <challenge> <NT or LM response hash>
+   challenger.py '<CloudCracker hash from chapcrack>'
+   challenger.py [-t | --test]  (demo mode)
+
+For rainbow table-like attacks, use rtchallenge.py to generate
+the appropriate rainbow tables and store the rainbow directory
+in the same directory as ./challenger.py.
+
+Please ensure you use single quotes (') when passing a CloudCracker/Chapcrack hash to Challenger in a *nix system, otherwise the '$' get interpreted as signifying environment variables.
+
+Author
+------
+
+Challenger was created by Tim Ehrhart (tehrhart@gmail.com), just for fun.
+
+
+Copyright
+---------
+
+Copyright 2013 by Tim Ehrhart
+
+Licensed under the GPLv3: http://www.gnu.org/licenses/gpl-3.0.
+
